@@ -8,7 +8,7 @@ const links = [
   { label: 'Contact', href: '#contact' },
 ]
 
-export default function Nav() {
+export default function Nav({ theme, onThemeToggle }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -51,8 +51,24 @@ export default function Nav() {
           {links.map((link) => (
             <a key={link.href} href={link.href} onClick={closeMenu}>{link.label}</a>
           ))}
+          <button
+            className="theme-toggle"
+            type="button"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            aria-pressed={theme === 'dark'}
+            onClick={onThemeToggle}
+          >
+            <svg className="theme-toggle-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+              {theme === 'dark' ? (
+                <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" /></>
+              ) : (
+                <path d="M20.5 15.2A8.5 8.5 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z" />
+              )}
+            </svg>
+            <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
+          </button>
           <a className="nav-resume" href="/mza-resume.pdf" target="_blank" rel="noreferrer">
-            Resume <span aria-hidden="true">↗</span>
+            Resume <span aria-hidden="true">&#8599;</span>
           </a>
         </div>
       </nav>

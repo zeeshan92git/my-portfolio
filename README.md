@@ -1,6 +1,6 @@
 # Muhammad Zeeshan Ameer — Portfolio
 
-A responsive portfolio for a full-stack engineer, built with React, Vite, Tailwind CSS and Framer Motion.
+A responsive portfolio for a full-stack engineer, built with React, Vite, Tailwind CSS and Framer Motion. It includes a persistent light/dark theme toggle.
 
 ## Run locally
 
