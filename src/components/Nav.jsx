@@ -1,25 +1,60 @@
-const tabs = [
-  { label: 'home', href: '#home' },
-  { label: 'about', href: '#about' },
-  { label: 'stack', href: '#stack' },
-  { label: 'projects', href: '#projects' },
-  { label: 'contact', href: '#contact' },
+import { useEffect, useState } from 'react'
+
+const links = [
+  { label: 'Projects', href: '#projects' },
+  { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Nav() {
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const updateScroll = () => setScrolled(window.scrollY > 12)
+    updateScroll()
+    window.addEventListener('scroll', updateScroll, { passive: true })
+    return () => window.removeEventListener('scroll', updateScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [menuOpen])
+
+  const closeMenu = () => setMenuOpen(false)
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-base/90 backdrop-blur border-b border-border">
-      <nav className="max-w-5xl mx-auto flex items-center gap-1 px-4 sm:px-6 overflow-x-auto">
-        <span className="path-label text-mint text-sm py-3 pr-4 shrink-0">MZA</span>
-        {tabs.map((tab) => (
-          <a
-            key={tab.href}
-            href={tab.href}
-            className="path-label text-xs sm:text-sm text-muted hover:text-ink whitespace-nowrap px-3 py-3 border-r border-border/70 last:border-r-0 transition-colors"
-          >
-            {tab.label}
+    <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
+      <nav className="nav-wrap" aria-label="Main navigation">
+        <a className="monogram" href="#home" aria-label="Zeeshan Ameer, home" onClick={closeMenu}>
+          ZA<span>.</span>
+        </a>
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={menuOpen}
+          aria-controls="primary-links"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+        </button>
+        <div id="primary-links" className={`nav-links${menuOpen ? ' is-open' : ''}`}>
+          {links.map((link) => (
+            <a key={link.href} href={link.href} onClick={closeMenu}>{link.label}</a>
+          ))}
+          <a className="nav-resume" href="/mza-resume.pdf" target="_blank" rel="noreferrer">
+            Resume <span aria-hidden="true">↗</span>
           </a>
-        ))}
+        </div>
       </nav>
     </header>
   )

@@ -1,39 +1,29 @@
 # Muhammad Zeeshan Ameer — Portfolio
 
-Built with React + Vite + Tailwind CSS + Framer Motion.
+A responsive portfolio for a full-stack engineer, built with React, Vite, Tailwind CSS and Framer Motion.
 
-## Design concept
-
-A terminal / git-log motif, since that's the world you actually live in as a
-developer: the hero is a fake terminal window with a typewriter line, section
-headers are styled like file paths (`~/about.tsx`, `~/stack.json`), and
-projects are laid out like git log entries (commit hash, `feat:` message,
-tech tags as `+ added` lines).
-
-## Run it locally
+## Run locally
 
 ```bash
 npm install
-npm run dev       # local dev server
-npm run build     # production build -> dist/
-npm run preview   # preview the production build
+npm run dev
 ```
 
-## Before you deploy — things to fill in
+Create a production build with:
 
-- `src/components/Contact.jsx` — replace the `#` placeholder hrefs for
-  LinkedIn and GitHub with your real profile URLs.
-- `public/resume.pdf` — add your resume PDF here (the Hero "download resume"
-  button links to `/resume.pdf`). Create a `public/` folder if it doesn't
-  exist yet.
-- `src/components/Projects.jsx` — the `live` and `source` fields for each
-  project are placeholder `#` links; point them at your actual deployments
-  and GitHub repos.
-- Deliberately left out: a public phone number in the contact section, to
-  avoid spam calls. Add one back only if you want it public.
+```bash
+npm run build
+```
 
-## Deploying
+## Project structure
 
-This is a static Vite build, so it deploys to Vercel/Netlify the same way
-your current site does: connect the repo, framework preset "Vite", build
-command `npm run build`, output directory `dist`.
+- `src/components/` contains the page sections and navigation.
+- `src/data/projects.js` keeps featured project details and verified links together.
+- `src/index.css` defines the emerald and champagne visual system and responsive layouts.
+- `public/mza-resume.pdf` is the resume linked from the page.
+
+The project artwork is typographic because the repository does not include project screenshots. Add real project images to `public/` and reference them in the project data when they are available.
+
+## Deployment
+
+This is a static Vite site. Use `npm run build` as the build command and `dist/` as the output directory on Vercel or Netlify.

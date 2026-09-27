@@ -1,41 +1,26 @@
-import { motion } from 'framer-motion'
-import SectionPath from './SectionPath.jsx'
+import SectionHeading from './SectionHeading.jsx'
 
 const groups = [
-  { key: 'frontend', items: ['React', 'Next.js', 'Tailwind CSS', 'JavaScript','Bootstrap'] },
-  { key: 'backend', items: ['Node.js', 'Express.js', 'REST APIs'] },
-  { key: 'database', items: ['MongoDB', 'SQL Server'] },
-  { key: 'tooling', items: ['Prisma', 'Mongoose', 'Vercel', 'Figma-to-code workflow', 'Git & Github'] },
+  { title: 'Frontend', note: 'Interfaces & experience', skills: ['React', 'Next.js', 'JavaScript', 'Tailwind CSS'] },
+  { title: 'Backend', note: 'Services & APIs', skills: ['Node.js', 'Express.js', 'FastAPI', 'ASP.NET / .NET'] },
+  { title: 'Data & infrastructure', note: 'Persistence & delivery', skills: ['MongoDB', 'Qdrant', 'Railway', 'Vercel'] },
+  { title: 'AI & workflow', note: 'Retrieval & collaboration', skills: ['LangChain', 'Embeddings', 'RAG pipelines', 'Git & GitHub'] },
 ]
 
 export default function TechStack() {
   return (
-    <section id="stack" className="px-4 sm:px-6 py-20 bg-surface/40">
-      <div className="max-w-5xl mx-auto">
-        <SectionPath path="~/stack.json" title="Tech stack" />
-
-        <div className="rounded-xl border border-border bg-surface p-6 sm:p-8 path-label text-sm leading-relaxed overflow-x-auto">
-          <span className="text-muted">{'{'}</span>
-          <div className="pl-4 sm:pl-6">
-            {groups.map((g, i) => (
-              <motion.div
-                key={g.key}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="py-1"
-              >
-                <span className="text-mint">"{g.key}"</span>
-                <span className="text-muted">: [</span>
-                <span className="text-amber">
-                  {g.items.map((it) => `"${it}"`).join(', ')}
-                </span>
-                <span className="text-muted">]{i < groups.length - 1 ? ',' : ''}</span>
-              </motion.div>
-            ))}
-          </div>
-          <span className="text-muted">{'}'}</span>
+    <section id="skills" className="section-shell skills-section">
+      <div className="content-width">
+        <SectionHeading eyebrow="Tools & technologies" title="A practical toolkit." intro="The technologies I use to shape, build and deliver ideas." />
+        <div className="skills-grid">
+          {groups.map((group, index) => (
+            <article className="skill-group" key={group.title}>
+              <p className="skill-index">0{index + 1}</p>
+              <h3>{group.title}</h3>
+              <p className="skill-note">{group.note}</p>
+              <ul className="tag-list">{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
+            </article>
+          ))}
         </div>
       </div>
     </section>

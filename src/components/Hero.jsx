@@ -1,97 +1,66 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
-const LINE = "full-stack engineer — react, next.js, node.js"
+const profileLinks = [
+  { label: 'GitHub', href: 'https://github.com/zeeshan92git' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/muhammadzeeshanameer' },
+  { label: 'Email', href: 'mailto:zeeshanameer576@gmail.com' },
+]
 
-function Typewriter() {
-  const [shown, setShown] = useState('')
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      setShown(LINE)
-      return
-    }
-    let i = 0
-    const id = setInterval(() => {
-      i += 1
-      setShown(LINE.slice(0, i))
-      if (i >= LINE.length) clearInterval(id)
-    }, 35)
-    return () => clearInterval(id)
-  }, [])
-
-  return (
-    <span className="path-label text-mint">
-      {shown}
-      <motion.span
-        aria-hidden="true"
-        animate={{ opacity: [1, 1, 0, 0] }}
-        transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}
-        className="inline-block w-[9px] h-[1em] bg-mint ml-1 translate-y-[1px]"
-      />
-    </span>
-  )
-}
+const focusAreas = [
+  { title: 'Web applications', detail: 'React · Next.js · Node.js' },
+  { title: 'Backend systems', detail: 'Express · FastAPI · .NET' },
+  { title: 'AI & retrieval', detail: 'LangChain · embeddings · Qdrant' },
+]
 
 export default function Hero() {
+  const reduceMotion = useReducedMotion()
+  const entrance = reduceMotion ? {} : { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 } }
+
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center pt-24 pb-16 px-4 sm:px-6"
-    >
-      <div className="max-w-5xl mx-auto w-full">
-        {/* terminal window */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="rounded-xl border border-border bg-surface shadow-2xl shadow-black/40 overflow-hidden"
-        >
-          <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-surface2">
-            <span className="w-3 h-3 rounded-full bg-rose/70" />
-            <span className="w-3 h-3 rounded-full bg-amber/70" />
-            <span className="w-3 h-3 rounded-full bg-mint/70" />
-            <span className="path-label text-xs text-muted ml-3">
-              zsh — ~/zeeshan-ameer
-            </span>
+    <section id="home" className="hero-section section-shell">
+      <div className="hero-grid content-width">
+        <motion.div className="hero-copy" {...entrance} transition={{ duration: 0.55, ease: 'easeOut' }}>
+          <p className="eyebrow"><span className="eyebrow-rule" /> Muhammad Zeeshan Ameer</p>
+          <h1>Full-Stack<br /><em>Engineer</em></h1>
+          <p className="hero-lede">Building scalable web applications and AI-powered experiences.</p>
+          <p className="hero-description">
+            I’m a Software Engineering student at PUCIT, University of the Punjab. I work across modern frontend and backend systems, and I’m growing my practice in AI and retrieval-augmented applications.
+          </p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="#projects">View projects <span aria-hidden="true">↘</span></a>
+            <a className="button button-secondary" href="/mza-resume.pdf" download="muhammad-zeeshan-ameer-resume.pdf">Download resume <span aria-hidden="true">↓</span></a>
           </div>
-
-          <div className="p-6 sm:p-10">
-            <p className="path-label text-sm text-muted mb-4">
-              <span className="text-mint">➜</span> ~ whoami
-            </p>
-            <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.1] mb-4">
-              Muhammad Zeeshan
-              <br />
-              Ameer
-            </h1>
-            <p className="path-label text-base sm:text-lg mb-6 min-h-[1.5em]">
-              <Typewriter />
-            </p>
-            <p className="text-muted max-w-xl mb-8 leading-relaxed">
-              I build scalable, production-shaped web apps across the MERN stack — 
-              from role-based dashboards to real-time features — for freelance clients and university
-              projects alike.
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="/#projects"
-                className="px-5 py-2.5 rounded-md bg-mint text-base font-medium path-label text-sm hover:bg-mint/90 transition-colors"
-              >
-                view projects
-              </a>
-              <a
-                href="/mza-resume.pdf"
-                className="px-5 py-2.5 rounded-md border border-border text-ink path-label text-sm hover:border-mint/60 hover:text-mint transition-colors"
-              >
-                download resume
-              </a>
-            </div>
-          </div>
+          <ul className="social-links" aria-label="Profile links">
+            {profileLinks.map((link) => (
+              <li key={link.label}><a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer'}>{link.label}<span aria-hidden="true">↗</span></a></li>
+            ))}
+          </ul>
         </motion.div>
+
+        <motion.aside
+          className="profile-panel"
+          aria-label="Areas of engineering focus"
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.12, ease: 'easeOut' }}
+        >
+          <div className="panel-topline"><span>01 / 03</span><span>Areas of focus</span></div>
+          <div className="panel-monogram" aria-hidden="true">ZA<span>.</span></div>
+          <p className="panel-caption">Software, systems<br />&amp; intelligent interfaces</p>
+          <div className="panel-divider" />
+          <ul className="focus-list">
+            {focusAreas.map((area, index) => (
+              <li key={area.title}>
+                <span className="focus-index">0{index + 1}</span>
+                <span><strong>{area.title}</strong><small>{area.detail}</small></span>
+                <span className="focus-arrow" aria-hidden="true">↗</span>
+              </li>
+            ))}
+          </ul>
+          <div className="panel-footer"><span>Lahore, Pakistan</span><span>BS Software Engineering</span></div>
+        </motion.aside>
       </div>
+      <div className="hero-index content-width" aria-hidden="true"><span>Independent thinking. Thoughtful engineering.</span><span>Scroll to explore ↓</span></div>
     </section>
   )
 }
