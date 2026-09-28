@@ -6,6 +6,7 @@ export const projects = [
     summary: 'An appointment platform connecting patients, doctors, and administrators through a shared booking workflow.',
     features: ['Authentication and role-based dashboards', 'Doctor availability, appointment scheduling, and cancellation', 'Stripe test payments'],
     technologies: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Stripe'],
+    live: 'https://doccure-ecru.vercel.app/',
     repositories: [
       { label: 'Frontend on GitHub', href: 'https://github.com/zeeshan92git/doc-frontend' },
       { label: 'Backend on GitHub', href: 'https://github.com/zeeshan92git/doc-backend' },
