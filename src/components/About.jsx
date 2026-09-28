@@ -1,9 +1,9 @@
 import SectionHeading from './SectionHeading.jsx'
 
 const focus = [
-  ['Product-minded frontend', 'Interfaces built with clarity, care and responsive detail.'],
-  ['End-to-end development', 'From React experiences through APIs and data layers.'],
-  ['Applied AI systems', 'Exploring retrieval, embeddings and LLM integrations.'],
+  ['Frontend', 'React and Next.js interfaces designed for clear, responsive use.'],
+  ['Backend', 'Node.js, Express, MongoDB, and REST API integration.'],
+  ['AI integration', 'Document question answering and retrieval-augmented generation.'],
 ]
 
 export default function About() {
@@ -13,10 +13,10 @@ export default function About() {
         <div className="about-intro">
           <SectionHeading eyebrow="A little about me" title="Engineering with a wider view." />
           <p>
-            I’m a Software Engineering student at PUCIT, University of the Punjab, focused on building full-stack web applications with React, Next.js, Node.js and modern backend technologies.
+            I’m a Software Engineering student at PUCIT, University of the Punjab. I build practical full-stack applications with React, Node.js, Express, and MongoDB.
           </p>
           <p>
-            I also work on independent web development projects and am extending my practice into AI and RAG systems with LangChain, embeddings, Qdrant and FastAPI.
+            I integrate AI capabilities into web products, including document question answering and retrieval-augmented generation using FastAPI, LangChain, embeddings, and Qdrant.
           </p>
           <p className="location-note"><span aria-hidden="true">⌖</span> Lahore, Pakistan</p>
         </div>
