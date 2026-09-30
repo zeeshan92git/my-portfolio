@@ -1,55 +1,59 @@
 import { useEffect, useState } from 'react'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
-import ExpertiseStrip from './components/ExpertiseStrip.jsx'
 import Projects from './components/Projects.jsx'
 import About from './components/About.jsx'
-import Experience from './components/Experience.jsx'
 import TechStack from './components/TechStack.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
-function getSavedTheme() {
+function getInitialTheme() {
   try {
-    return window.localStorage.getItem('portfolio-theme') === 'dark' ? 'dark' : 'light'
+    const saved = window.localStorage.getItem('portfolio-theme')
+    if (saved === 'dark' || saved === 'light') return saved
   } catch {
-    return 'light'
+    // Local storage unavailable
   }
+  if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark'
+  }
+  return 'light'
 }
 
 export default function App() {
-  return (
-    <Portfolio />
-  )
-}
-
-function Portfolio() {
-  const [theme, setTheme] = useState(getSavedTheme)
+  const [theme, setTheme] = useState(getInitialTheme)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
+    document.documentElement.classList.toggle('dark', theme === 'dark')
     document.documentElement.style.colorScheme = theme
-    document.querySelector('meta[name="theme-color"]')?.setAttribute(
-      'content',
-      theme === 'dark' ? '#0d1915' : '#FBE7C9',
-    )
+
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', theme === 'dark' ? '#101412' : '#FCF8F1')
+    }
+
     try {
       window.localStorage.setItem('portfolio-theme', theme)
     } catch {
-      // The selected theme still works for this visit if storage is unavailable.
+      // Local storage write failed silently
     }
   }, [theme])
 
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))
+  }
+
   return (
     <div className="site-shell" data-theme={theme}>
-      <a className="skip-link" href="#main">Skip to content</a>
-      <Nav theme={theme} onThemeToggle={() => setTheme((current) => current === 'light' ? 'dark' : 'light')} />
+      <a className="skip-link" href="#main">
+        Skip to main content
+      </a>
+      <Nav theme={theme} onThemeToggle={toggleTheme} />
       <main id="main">
         <Hero />
-        <ExpertiseStrip />
         <Projects />
         <About />
-        <Experience />
         <TechStack />
         <Contact />
       </main>
