@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const navLinks = [
-  { label: 'Work', href: '#projects' },
+  { label: 'Home', href: '#home' },
+  { label: 'Projects', href: '#projects' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Contact', href: '#contact' },
@@ -10,6 +11,8 @@ const navLinks = [
 export default function Nav({ theme, onThemeToggle }) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const menuButtonRef = useRef(null)
+  const firstMenuLinkRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,8 +25,12 @@ export default function Nav({ theme, onThemeToggle }) {
 
   useEffect(() => {
     if (!mobileMenuOpen) return undefined
+    firstMenuLinkRef.current?.focus()
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setMobileMenuOpen(false)
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
@@ -45,7 +52,7 @@ export default function Nav({ theme, onThemeToggle }) {
         <a
           href="#home"
           onClick={closeMenu}
-          className="font-serif text-2xl font-normal tracking-tight text-[var(--text)] hover:opacity-80 transition-opacity flex items-center gap-0.5"
+          className="text-2xl font-bold tracking-tight text-[var(--text)] hover:opacity-80 transition-opacity flex items-center gap-0.5"
           aria-label="Muhammad Zeeshan Ameer - Return to top"
         >
           <span>ZA</span>
@@ -53,12 +60,12 @@ export default function Nav({ theme, onThemeToggle }) {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium" aria-label="Main Navigation">
+        <nav className="hidden md:flex items-center gap-8 text-base font-medium" aria-label="Main navigation">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors py-1"
+              className="flex min-h-11 items-center text-[var(--muted)] hover:text-[var(--accent)] transition-colors py-1"
             >
               {link.label}
             </a>
@@ -72,7 +79,7 @@ export default function Nav({ theme, onThemeToggle }) {
             onClick={onThemeToggle}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             aria-pressed={theme === 'dark'}
-            className="p-2 rounded-full border border-[var(--border)] text-[var(--text)] hover:text-[var(--accent)] hover:border-[var(--accent)] hover:bg-[var(--surface)] transition-all cursor-pointer"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text)] hover:text-[var(--accent)] hover:border-[var(--accent)] hover:bg-[var(--surface)] transition-colors cursor-pointer"
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {theme === 'dark' ? (
@@ -93,7 +100,7 @@ export default function Nav({ theme, onThemeToggle }) {
             href="/mza-resume.pdf"
             target="_blank"
             rel="noreferrer"
-            className="text-xs font-semibold px-4 py-2 rounded-full border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-text)] transition-colors inline-flex items-center gap-1.5"
+            className="min-h-11 text-sm font-semibold px-4 py-2 rounded-lg border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-text)] transition-colors inline-flex items-center gap-1.5"
           >
             <span>Resume</span>
             <span aria-hidden="true" className="text-xs">↗</span>
@@ -106,7 +113,8 @@ export default function Nav({ theme, onThemeToggle }) {
             type="button"
             onClick={onThemeToggle}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className="p-2 rounded-lg border border-[var(--border)] text-[var(--text)] hover:bg-[var(--surface)] transition-all cursor-pointer"
+            aria-pressed={theme === 'dark'}
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer"
           >
             {theme === 'dark' ? (
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -121,12 +129,13 @@ export default function Nav({ theme, onThemeToggle }) {
           </button>
 
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setMobileMenuOpen((open) => !open)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav"
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            className="p-2 rounded-lg border border-[var(--border)] text-[var(--text)] hover:bg-[var(--surface)] transition-all cursor-pointer"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               {mobileMenuOpen ? (
@@ -145,13 +154,14 @@ export default function Nav({ theme, onThemeToggle }) {
           id="mobile-nav"
           className="md:hidden border-b border-[var(--border)] bg-[var(--surface)] px-6 py-6 shadow-lg space-y-4"
         >
-          <nav className="flex flex-col space-y-3" aria-label="Mobile Navigation">
+          <nav className="flex flex-col space-y-3" aria-label="Mobile navigation">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={closeMenu}
-                className="text-base font-medium text-[var(--text)] hover:text-[var(--accent)] py-2 border-b border-[var(--border-subtle)]"
+                ref={link.href === navLinks[0].href ? firstMenuLinkRef : undefined}
+                className="flex min-h-11 items-center border-b border-[var(--border-subtle)] py-2 text-base font-medium text-[var(--text)] hover:text-[var(--accent)]"
               >
                 {link.label}
               </a>
@@ -163,7 +173,7 @@ export default function Nav({ theme, onThemeToggle }) {
               target="_blank"
               rel="noreferrer"
               onClick={closeMenu}
-              className="w-full text-center text-sm font-semibold py-2.5 rounded-lg border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-text)] transition-colors"
+              className="flex min-h-11 w-full items-center justify-center rounded-lg border border-[var(--accent)] py-2.5 text-base font-semibold text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-text)] transition-colors"
             >
               View Resume ↗
             </a>

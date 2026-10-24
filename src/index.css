@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 100%;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,8 +31,7 @@
   --cta-button-hover: #FFFFFF;
 
   /* Fonts */
-  --serif: 'DM Serif Display', Georgia, serif;
-  --sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 :root[data-theme='dark'] {
@@ -144,20 +143,6 @@ button, a {
 
 .skip-link:focus {
   transform: translateY(0);
-}
-
-/* Smooth Image Hover Effect */
-.project-img-wrapper {
-  overflow: hidden;
-  border-radius: 0.5rem;
-}
-
-.project-img-wrapper img {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card:hover .project-img-wrapper img {
-  transform: scale(1.02);
 }
 
 /* Reduced motion preference */

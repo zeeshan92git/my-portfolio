@@ -1,82 +1,39 @@
-import { motion, useReducedMotion } from 'framer-motion'
-
 const skillGroups = [
-  {
-    category: 'Frontend',
-    number: '01',
-    skills: ['React', 'Next.js', 'Tailwind CSS', 'JavaScript', 'HTML5 & CSS3'],
-  },
-  {
-    category: 'Backend',
-    number: '02',
-    skills: ['Node.js', 'Express.js', 'FastAPI', 'REST APIs', 'JWT Auth'],
-  },
-  {
-    category: 'Database',
-    number: '03',
-    skills: ['MongoDB', 'Qdrant (Vector DB)', 'Mongoose', 'Atlas'],
-  },
-  {
-    category: 'AI & Tools',
-    number: '04',
-    skills: ['LangChain', 'RAG Pipelines', 'Git & GitHub', 'Postman', 'Vercel'],
-  },
+  { category: 'Frontend', skills: ['React', 'Next.js', 'JavaScript', 'Tailwind CSS', 'HTML', 'CSS'] },
+  { category: 'Backend', skills: ['Node.js', 'Express.js', 'REST APIs', 'JWT Authentication'] },
+  { category: 'Databases', skills: ['MongoDB', 'Mongoose'] },
+  { category: 'Tools', skills: ['Git', 'GitHub', 'Postman', 'Vercel'] },
 ]
 
 export default function TechStack() {
-  const reduceMotion = useReducedMotion()
-
   return (
-    <section id="skills" className="section-spacing bg-[var(--surface)] border-t border-[var(--border)]">
+    <section id="skills" className="section-spacing border-y border-[var(--border)] bg-[var(--surface)]">
       <div className="content-container">
-        {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <span className="w-5 h-[1px] bg-[var(--accent)]" />
-            <span className="text-xs font-semibold tracking-widest uppercase text-[var(--accent)]">
-              Technical Toolkit
-            </span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[var(--text)] tracking-tight">
-            Focused & practical.
+        <header className="mb-9 max-w-2xl sm:mb-12">
+          <p className="mb-3 text-sm font-semibold text-[var(--accent)]">Skills</p>
+          <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
+            Tools for full-stack product development.
           </h2>
-          <p className="mt-2 text-base text-[var(--muted)]">
-            Core technologies used to build scalable full-stack products and intelligent AI systems.
+          <p className="mt-4 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            Technologies supported by my projects, training, and development work.
           </p>
-        </div>
+        </header>
 
-        {/* 4-Column Clean Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillGroups.map((group, index) => (
-            <motion.div
-              key={group.category}
-              className="p-5 rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)] space-y-4"
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-            >
-              <div className="flex items-center justify-between pb-3 border-b border-[var(--border-subtle)]">
-                <h3 className="font-serif text-lg font-normal text-[var(--text)]">
-                  {group.category}
-                </h3>
-                <span className="text-xs font-mono font-semibold text-[var(--accent)]">
-                  {group.number}
-                </span>
-              </div>
-
-              {/* Clean tags */}
-              <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          {skillGroups.map((group) => (
+            <section key={group.category} aria-labelledby={`skills-${group.category.toLowerCase()}`}>
+              <h3
+                id={`skills-${group.category.toLowerCase()}`}
+                className="border-b border-[var(--border)] pb-3 text-base font-bold text-[var(--text)]"
+              >
+                {group.category}
+              </h3>
+              <ul className="mt-3 space-y-2">
                 {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-2.5 py-1 text-xs font-medium rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--accent)] transition-colors"
-                  >
-                    {skill}
-                  </span>
+                  <li key={skill} className="text-base text-[var(--muted)]">{skill}</li>
                 ))}
-              </div>
-            </motion.div>
+              </ul>
+            </section>
           ))}
         </div>
       </div>

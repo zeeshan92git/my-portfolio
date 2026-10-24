@@ -6,13 +6,13 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="py-10 border-t border-[var(--border)] bg-[var(--bg)] text-[var(--muted)] text-xs">
+    <footer className="py-8 border-t border-[var(--border)] bg-[var(--bg)] text-[var(--muted)] text-sm">
       <div className="content-container flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Brand / Name */}
         <div className="flex items-center gap-2 text-[var(--text)]">
-          <span className="font-serif text-lg font-normal">ZA.</span>
-          <span className="text-[var(--border)]">|</span>
-          <span className="font-medium text-xs text-[var(--muted)]">
+          <span className="text-lg font-bold">ZA.</span>
+          <span aria-hidden="true" className="text-[var(--border)]">|</span>
+          <span className="font-medium text-sm text-[var(--muted)]">
             Muhammad Zeeshan Ameer
           </span>
         </div>
@@ -25,7 +25,7 @@ export default function Footer() {
               href={link.href}
               target={link.href.startsWith('mailto:') ? undefined : '_blank'}
               rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer'}
-              className="hover:text-[var(--accent)] transition-colors"
+              className="inline-flex min-h-11 items-center hover:text-[var(--accent)] transition-colors"
             >
               {link.label} ↗
             </a>

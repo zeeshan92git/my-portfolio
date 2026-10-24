@@ -1,139 +1,84 @@
-import { motion, useReducedMotion } from 'framer-motion'
 import { projects } from '../data/projects.js'
-import ProjectMockup from './ProjectMockup.jsx'
+
+function ProjectCard({ project }) {
+  return (
+    <article className="flex h-full flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8">
+      {project.image && (
+        <img
+          src={project.image}
+          alt={`${project.name} project`}
+          width="1200"
+          height="750"
+          loading="lazy"
+          className="mb-7 aspect-[16/10] w-full rounded-lg border border-[var(--border)] object-cover"
+        />
+      )}
+      <p className="text-sm font-semibold text-[var(--accent)]">{project.subtitle}</p>
+      <h3 className="mt-2 text-2xl font-bold tracking-tight text-[var(--text)] sm:text-[1.75rem]">
+        {project.name}
+      </h3>
+      <p className="mt-4 max-w-prose text-base leading-relaxed text-[var(--muted)]">
+        {project.description}
+      </p>
+
+      <ul className="mt-5 flex flex-wrap gap-2" aria-label={`${project.name} technologies`}>
+        {project.technologies.map((technology) => (
+          <li
+            key={technology}
+            className="rounded-md border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5 text-sm font-medium text-[var(--text)]"
+          >
+            {technology}
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[var(--border-subtle)] pt-6 text-base font-semibold">
+        {project.live && (
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${project.name} live demo in a new tab`}
+            className="inline-flex min-h-11 items-center text-[var(--accent)] underline decoration-transparent underline-offset-4 hover:decoration-current"
+          >
+            Live Demo{project.liveStatus ? ` (${project.liveStatus})` : ''} <span aria-hidden="true">↗</span>
+          </a>
+        )}
+        {project.repositories.map((repository) => (
+          <a
+            key={repository.label}
+            href={repository.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${project.name} ${repository.label} repository on GitHub, opens in a new tab`}
+            className="inline-flex min-h-11 items-center text-[var(--text)] underline decoration-[var(--border)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-current"
+          >
+            {repository.label} on GitHub <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+        {project.sourceStatus && (
+          <span className="text-sm font-medium text-[var(--muted)]">{project.sourceStatus}</span>
+        )}
+      </div>
+    </article>
+  )
+}
 
 export default function Projects() {
-  const reduceMotion = useReducedMotion()
-
   return (
-    <section id="projects" className="section-spacing bg-[var(--surface)] border-y border-[var(--border)]">
+    <section id="projects" className="section-spacing border-y border-[var(--border)] bg-[var(--surface)]">
       <div className="content-container">
-        {/* Section Header */}
-        <div className="max-w-2xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <span className="w-5 h-[1px] bg-[var(--accent)]" />
-            <span className="text-xs font-semibold tracking-widest uppercase text-[var(--accent)]">
-              Selected Work
-            </span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal text-[var(--text)] tracking-tight">
-            Built with purpose.
+        <header className="mb-9 max-w-2xl sm:mb-12">
+          <p className="mb-3 text-sm font-semibold text-[var(--accent)]">Selected work</p>
+          <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
+            Projects built around real workflows.
           </h2>
-          <p className="mt-3 text-base text-[var(--muted)]">
-            Production-ready web applications and AI integrations with clear architecture.
+          <p className="mt-4 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            Full-stack applications that bring together clear interfaces, useful features, and maintainable systems.
           </p>
-        </div>
-
-        {/* Project Showcases */}
-        <div className="space-y-16 sm:space-y-24">
-          {projects.map((project, index) => {
-            const isEven = index % 2 === 0
-            return (
-              <motion.article
-                key={project.id}
-                className="project-card grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-              >
-                {/* Visual Mockup Container (Order alternates on desktop) */}
-                <div
-                  className={`lg:col-span-7 project-img-wrapper ${
-                    isEven ? 'lg:order-1' : 'lg:order-2'
-                  }`}
-                >
-                  <ProjectMockup project={project} />
-                </div>
-
-                {/* Project Details */}
-                <div
-                  className={`lg:col-span-5 space-y-4 ${
-                    isEven ? 'lg:order-2' : 'lg:order-1'
-                  }`}
-                >
-                  {/* Number & Tagline */}
-                  <div className="flex items-center gap-3 text-xs font-mono">
-                    <span className="font-bold text-sm text-[var(--accent)]">
-                      {project.number}
-                    </span>
-                    <span className="text-[var(--border)]">/</span>
-                    <span className="text-[var(--muted)] font-medium uppercase tracking-wider">
-                      {project.tagline}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[var(--text)] tracking-tight">
-                    {project.name}
-                  </h3>
-
-                  {/* 1-Line Description */}
-                  <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {/* Max 3-4 Technology Tags */}
-                  <div className="pt-1 flex flex-wrap gap-2" aria-label={`${project.name} technologies`}>
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 text-xs font-medium rounded-full bg-[var(--surface-elevated)] border border-[var(--border)] text-[var(--text)]"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Action Links */}
-                  <div className="pt-3 flex flex-wrap items-center gap-4 text-sm font-semibold">
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[var(--accent)] text-[var(--accent-text)] hover:bg-[var(--accent-hover)] transition-colors shadow-sm"
-                      >
-                        <span>Live Demo</span>
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[var(--border)] text-[var(--text)] hover:border-[var(--accent)] hover:text-[var(--accent)] hover:bg-[var(--surface-elevated)] transition-colors"
-                      >
-                        <span>GitHub</span>
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-
-                    {project.isPrivate && (
-                      <span className="text-xs text-[var(--muted)] font-mono italic">
-                        Private Client Repository
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </motion.article>
-            )
-          })}
-        </div>
-
-        {/* Explore more on GitHub */}
-        <div className="mt-16 pt-8 border-t border-[var(--border)] text-center">
-          <a
-            href="https://github.com/zeeshan92git?tab=repositories"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent)] hover:underline"
-          >
-            <span>Explore all open-source repositories on GitHub</span>
-            <span aria-hidden="true">→</span>
-          </a>
+        </header>
+        <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2 lg:gap-6">
+          {projects.map((project) => <ProjectCard key={project.id} project={project} />)}
         </div>
       </div>
     </section>

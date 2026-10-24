@@ -1,103 +1,48 @@
-import { motion, useReducedMotion } from 'framer-motion'
-
 export default function About() {
-  const reduceMotion = useReducedMotion()
-
   return (
     <section id="about" className="section-spacing">
       <div className="content-container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Short Editorial Bio */}
-          <motion.div
-            className="lg:col-span-7 space-y-6"
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="inline-flex items-center gap-2">
-              <span className="w-5 h-[1px] bg-[var(--accent)]" />
-              <span className="text-xs font-semibold tracking-widest uppercase text-[var(--accent)]">
-                About & Background
-              </span>
-            </div>
-
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[var(--text)] tracking-tight">
-              Engineering with a focus on usability & craft.
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <p className="mb-3 text-sm font-semibold text-[var(--accent)]">About</p>
+            <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
+              Practical engineering, from interface to API.
             </h2>
-
-            {/* Exactly 2 short sentences / 3-5 lines */}
-            <p className="text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-              I’m a Software Engineering student at PUCIT focused on full-stack development and AI-powered web applications.
+            <p className="mt-5 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+              I’m a Software Engineering student at PUCIT who enjoys solving practical problems through web development. I build responsive React interfaces, REST APIs, authentication flows, and data models, with care for usability and maintainability.
             </p>
-            <p className="text-base text-[var(--muted)] leading-relaxed">
-              I build reliable web systems with React, Node.js, Express, and MongoDB, integrating modern RAG tools, vector databases, and FastAPI.
+            <p className="mt-4 text-base leading-relaxed text-[var(--muted)]">
+              Based in Lahore, Pakistan.
             </p>
+          </div>
 
-            {/* Location pill */}
-            <div className="pt-2 flex items-center gap-2 text-sm text-[var(--text)] font-medium">
-              <span className="text-base">📍</span>
-              <span>Based in Lahore, Pakistan</span>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Compact Education & Experience Card */}
-          <motion.div
-            className="lg:col-span-5"
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <div className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm space-y-6">
-              {/* Education Block */}
-              <div>
-                <span className="text-[11px] font-semibold text-[var(--accent)] uppercase tracking-wider">
-                  Education
-                </span>
-                <div className="mt-2 flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="font-semibold text-sm text-[var(--text)]">
-                      BS Software Engineering
-                    </h3>
-                    <p className="text-xs text-[var(--muted)] mt-0.5">
-                      PUCIT — University of the Punjab
-                    </p>
-                  </div>
-                  <span className="text-xs font-mono font-medium text-[var(--muted)] whitespace-nowrap">
-                    2023–2027
-                  </span>
-                </div>
+          <div className="grid grid-cols-1 gap-9 border-t border-[var(--border)] pt-8 sm:grid-cols-2 lg:col-span-7 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+            <section aria-labelledby="education-heading">
+              <h3 id="education-heading" className="text-lg font-bold text-[var(--text)]">Education</h3>
+              <div className="mt-5">
+                <p className="text-base font-semibold text-[var(--text)]">BS Software Engineering</p>
+                <p className="mt-1 text-base text-[var(--muted)]">PUCIT, University of the Punjab</p>
+                <p className="mt-2 text-sm text-[var(--muted)]">2023–2027 · Expected graduation</p>
+                <p className="text-sm text-[var(--muted)]">Lahore, Pakistan</p>
               </div>
+            </section>
 
-              <div className="h-[1px] bg-[var(--border-subtle)]" />
-
-              {/* Experience Milestones */}
-              <div className="space-y-3">
-                <span className="text-[11px] font-semibold text-[var(--accent)] uppercase tracking-wider">
-                  Experience Milestones
-                </span>
-
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-4 text-xs">
-                    <div>
-                      <p className="font-semibold text-[var(--text)]">MERN Developer Intern</p>
-                      <p className="text-[var(--muted)]">Developer's Hub Corporation</p>
-                    </div>
-                    <span className="font-mono text-[var(--muted)] whitespace-nowrap">2025</span>
-                  </div>
-
-                  <div className="flex items-start justify-between gap-4 text-xs">
-                    <div>
-                      <p className="font-semibold text-[var(--text)]">MERN Stack Trainee</p>
-                      <p className="text-[var(--muted)]">Nexus Berry Solutions</p>
-                    </div>
-                    <span className="font-mono text-[var(--muted)] whitespace-nowrap">2025</span>
-                  </div>
-                </div>
+            <section aria-labelledby="experience-heading">
+              <h3 id="experience-heading" className="text-lg font-bold text-[var(--text)]">Experience</h3>
+              <div className="mt-5 space-y-6">
+                <article>
+                  <h4 className="text-base font-semibold text-[var(--text)]">MERN Stack Developer Intern</h4>
+                  <p className="mt-1 text-base text-[var(--muted)]">Developer’s Hub Corporation</p>
+                  <p className="mt-1 text-sm text-[var(--muted)]">May–June 2025</p>
+                </article>
+                <article>
+                  <h4 className="text-base font-semibold text-[var(--text)]">MERN Stack Trainee</h4>
+                  <p className="mt-1 text-base text-[var(--muted)]">Nexus Berry Training &amp; Solutions</p>
+                  <p className="mt-1 text-sm text-[var(--muted)]">January–April 2025</p>
+                </article>
               </div>
-            </div>
-          </motion.div>
+            </section>
+          </div>
         </div>
       </div>
     </section>
